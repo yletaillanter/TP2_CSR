@@ -16,9 +16,9 @@ private Client[] clients = new Client[maxClients];
 private int nbClients = 0;
 
 
-/* Cette fonction crée un seul client à la fois (à la limite aucun).
- * Elle renvoie vrai si et seulement si un client a été créé.
- * Elle renvoie faux dès que la création des clients est terminée. */
+/* Cette fonction crï¿½e un seul client ï¿½ la fois (ï¿½ la limite aucun).
+ * Elle renvoie vrai si et seulement si un client a ï¿½tï¿½ crï¿½ï¿½.
+ * Elle renvoie faux dï¿½s que la crï¿½ation des clients est terminï¿½e. */
 
 private boolean nouveauClient() {
 
@@ -42,7 +42,7 @@ private boolean nouveauClient() {
 }
 
 
-/* Constructeur. Il est appelé lors de l'instanciation du système d'emprunt. */
+/* Constructeur. Il est appelï¿½ lors de l'instanciation du systï¿½me d'emprunt. */
 
 SystemeEmprunt() {
 
@@ -55,23 +55,22 @@ SystemeEmprunt() {
 	/* Instanciation des clients */
 	while(nouveauClient());
 
-	/* Instanciation du camion et lancement du thread associé */
+	/* Instanciation du camion et lancement du thread associï¿½ */
 	new Camion(sites).start();
 
-	/* Lancement des threads associés aux clients */
+	/* Lancement des threads associï¿½s aux clients */
 	for(i = 0; i < nbClients; i++)
 		clients[i].start();
 
 }
 
 
-/* Point d'entrée du programme */
+/* Point d'entrï¿½e du programme */
 
 public static void main(String[] args) {
 
 	new SystemeEmprunt();
 
 }
-
 
 } // class SystemeEmprunt

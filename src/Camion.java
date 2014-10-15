@@ -1,3 +1,5 @@
+import java.rmi.UnexpectedException;
+
 /**
  * Created by 14007427 on 15/10/14.
  */
@@ -18,6 +20,12 @@ public class Camion extends Thread {
         int i=0;
 
         while(true){
+
+            try{
+                Thread.sleep(1000);
+            } catch(InterruptedException e){
+                System.out.println(e.getMessage());
+            }
 
             siteCourant = listeSite[i];
             i++;
