@@ -34,7 +34,7 @@ private boolean nouveauClient() {
 	depart = sites[(int)(Math.random()*(nbSites-0))];
 	arrivee = sites[(int)(Math.random()*(nbSites-0))];
 
-	clients[nbClients] = new Client(nbClients, depart, arrivee);
+    clients[nbClients] = new Client(nbClients, depart, arrivee);
 	nbClients++;
 
 	return true;
@@ -66,9 +66,7 @@ SystemeEmprunt() {
 /* Point d'entr�e du programme */
 
 public static void main(String[] args) {
-
 	new SystemeEmprunt();
-
 }
 
 } // class SystemeEmprunt

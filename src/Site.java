@@ -43,16 +43,15 @@ private int nombreVelo;
                 e.printStackTrace();
             }
         }
+
         setNombreVelo(getNombreVelo()+1);
-        if(nombreVelo == 1)
+        if(getNombreVelo() == 1)
             notify();
     }
 
-    public int getNumeroSite() {
-        return numeroSite;
-    }
+    public int getNumeroSite() { return numeroSite; }
 
-    public int getNombreVelo() {
+    synchronized public int getNombreVelo() {
        return nombreVelo;
     }
 
