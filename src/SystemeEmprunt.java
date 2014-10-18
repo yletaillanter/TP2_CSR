@@ -31,14 +31,13 @@ private boolean nouveauClient() {
 		return false;
 	}
 
-	depart = sites[0];
-	arrivee = sites[1];
+	depart = sites[(int)(Math.random()*(nbSites-0))];
+	arrivee = sites[(int)(Math.random()*(nbSites-0))];
 
 	clients[nbClients] = new Client(nbClients, depart, arrivee);
 	nbClients++;
 
 	return true;
-	
 }
 
 
@@ -60,8 +59,7 @@ SystemeEmprunt() {
 
 	/* Lancement des threads associ�s aux clients */
 	for(i = 0; i < nbClients; i++)
-		clients[i].start();
-
+        clients[i].start();
 }
 
 

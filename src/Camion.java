@@ -21,37 +21,43 @@ public class Camion extends Thread {
 
         while(true){
 
+            /*
             try{
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch(InterruptedException e){
                 System.out.println(e.getMessage());
             }
+            */
 
             siteCourant = listeSite[i];
-            i++;
+            synchronized (siteCourant){
 
-            if(siteCourant.getNombreVelo()<siteCourant.borneInf){
+                if(siteCourant.getNombreVelo()<siteCourant.borneInf){
 
-                if(stockCamion>=(siteCourant.stockInit-siteCourant.getNombreVelo())){
-                    siteCourant.setNombreVelo(siteCourant.getNombreVelo() + (siteCourant.stockInit-siteCourant.getNombreVelo()));
-                    stockCamion -= (siteCourant.stockInit-siteCourant.getNombreVelo());
+                    if(stockCamion>=(siteCourant.stockInit-siteCourant.getNombreVelo())){
+                        siteCourant.setNombreVelo(siteCourant.getNombreVelo() + (siteCourant.stockInit-siteCourant.getNombreVelo()));
+                        stockCamion -= (siteCourant.stockInit-siteCourant.getNombreVelo());
+
+                    }
+                    else {
+                        siteCourant.setNombreVelo(siteCourant.getNombreVelo()+stockCamion);
+                        stockCamion = 0;
+                    }
+
+                }else if(siteCourant.getNombreVelo()>siteCourant.borneSup) {
+                    stockCamion = stockCamion + ((siteCourant.getNombreVelo() - siteCourant.borneSup));
+                    siteCourant.setNombreVelo(siteCourant.getNombreVelo() - (siteCourant.getNombreVelo() - siteCourant.stockInit));
                 }
-                else {
-                    siteCourant.setNombreVelo(siteCourant.getNombreVelo()+stockCamion);
-                    stockCamion = 0;
+                else{
+                    System.out.println("Nombre de vélos OK sur le site " + siteCourant.getNumeroSite());
                 }
-            }else if(siteCourant.getNombreVelo()>siteCourant.borneSup) {
 
-                stockCamion = stockCamion + ((siteCourant.getNombreVelo() - siteCourant.borneSup));
-                siteCourant.setNombreVelo(siteCourant.getNombreVelo() - (siteCourant.getNombreVelo() - siteCourant.stockInit));
+                i++;
+
+                if(i==listeSite.length) {
+                    i = 0;
+                }
             }
-            else{
-                System.out.println("Nombre de vélos OK sur le site " + siteCourant);
-            }
-
-            if(i==listeSite.length)
-                i=0;
-
         }
     }
 }

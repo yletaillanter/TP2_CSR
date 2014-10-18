@@ -17,7 +17,11 @@ private int nombreVelo;
         nombreVelo = stockInit;
     }
 
-    public void emprunter(){
+    public void afficherStock(){
+        System.out.println("Stock de site n°" +getNumeroSite()+" = "+ getNombreVelo());
+    }
+
+    synchronized public void emprunter(){
         while(nombreVelo==0) {
             try {
                 wait();
@@ -25,9 +29,20 @@ private int nombreVelo;
                 e.printStackTrace();
             }
         }
+        // Si il y a plus de 0 vélo on en emprunte un.
+        setNombreVelo(getNombreVelo()-1);
+        if(getNombreVelo()==stockMax-1)
+            notify();
     }
 
-    public void rendre(){
+    synchronized public void rendre(){
+        while(stockMax==nombreVelo){
+            try{
+                wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
         setNombreVelo(getNombreVelo()+1);
         if(nombreVelo == 1)
             notify();
@@ -37,7 +52,7 @@ private int nombreVelo;
         return numeroSite;
     }
 
-    synchronized public int getNombreVelo() {
+    public int getNombreVelo() {
        return nombreVelo;
     }
 

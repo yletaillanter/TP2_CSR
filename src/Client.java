@@ -14,18 +14,20 @@ public class Client extends Thread{
         this.siteArrivee = siteArrive;
     }
 
+
     @Override
     public void run(){
-
         distance = Math.abs(siteArrivee.getNumeroSite()-siteDepart.getNumeroSite());
         siteDepart.emprunter();
-        System.out.println("Client " + nbClient + "emprunte sur le site " + siteDepart);
+        System.out.println("Client " + nbClient + "("+siteDepart.getNumeroSite()+","+siteArrivee.getNumeroSite()+")"+ " EMPRUNTE sur le site " + siteDepart.getNumeroSite());
+        siteDepart.afficherStock();
 
         try {
-            Thread.sleep(distance*100);
+            Thread.sleep(distance*1000);
         } catch(InterruptedException e) {}
 
         siteArrivee.rendre();
-        System.out.println("Client " + nbClient + "rend sur le site " + siteDepart);
+        System.out.println("Client " + nbClient + "("+siteDepart.getNumeroSite()+","+siteArrivee.getNumeroSite()+")"+ " REND sur le site " + siteDepart.getNumeroSite());
+        siteArrivee.afficherStock();
     }
 }
