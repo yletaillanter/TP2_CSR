@@ -22,7 +22,7 @@ private int nombreVelo;
     }
 
     synchronized public void emprunter(){
-        while(nombreVelo==0) {
+        while( getNombreVelo()==0) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -36,7 +36,8 @@ private int nombreVelo;
     }
 
     synchronized public void rendre(){
-        while(stockMax==nombreVelo){
+
+        while(stockMax== getNombreVelo()){
             try{
                 wait();
             }catch(InterruptedException e){

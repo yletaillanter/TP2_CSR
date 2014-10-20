@@ -26,7 +26,6 @@ public class Camion extends Thread {
 
         while(true){
 
-
             try{
                 Thread.sleep(100);
             } catch(InterruptedException e){
@@ -34,21 +33,20 @@ public class Camion extends Thread {
             }
 
             siteCourant = listeSite[i];
-            synchronized (siteCourant){
-
-                if(siteCourant.getNombreVelo()<siteCourant.borneInf){
-
+                  if(siteCourant.getNombreVelo()<siteCourant.borneInf){
                     if(getStockCamion()>=(siteCourant.stockInit-siteCourant.getNombreVelo())){
                         nb = siteCourant.getNombreVelo() + (siteCourant.stockInit-siteCourant.getNombreVelo());
                         siteCourant.setNombreVelo(nb);
                         stockCamion -= (nb);
                         System.out.println("J'ai ajouté "+nb+" vélos au site "+ siteCourant.getNumeroSite() +" stock CAMION = "+ getStockCamion()+" ; stock site n°"+ siteCourant.getNumeroSite()+" = " + siteCourant.getNombreVelo());
+                        //notify();
                     }
                     else {
                         nb = siteCourant.getNombreVelo()+getStockCamion();
                         siteCourant.setNombreVelo(nb);
                         stockCamion = 0;
                         System.out.println("J'ai ajouté "+nb+" vélos au site "+ siteCourant.getNumeroSite() +" stock CAMION = "+ getStockCamion()+" ; stock site n°"+ siteCourant.getNumeroSite()+" = " + siteCourant.getNombreVelo());
+                        //notify();
                     }
 
                 }else if(siteCourant.getNombreVelo()>siteCourant.borneSup) {
@@ -56,6 +54,7 @@ public class Camion extends Thread {
                     stockCamion = getStockCamion() + nb;
                     siteCourant.setNombreVelo(nb);
                     System.out.println("J'ai enlevé "+nb+" vélos au site "+ siteCourant.getNumeroSite() +" stock CAMION = "+ getStockCamion()+" ; stock site n°"+ siteCourant.getNumeroSite()+" = " + siteCourant.getNombreVelo());
+                    //notify();
                 }
                 else{
                     System.out.println("Nombre de vélos OK sur le site " + siteCourant.getNumeroSite());
@@ -66,7 +65,8 @@ public class Camion extends Thread {
                 if(i==listeSite.length) {
                     i = 0;
                 }
-            }
+                System.out.print("CAMION, mon stock =" + getStockCamion());
+                System.out.println(" ; stock site = "+siteCourant.getNumeroSite()+","+siteCourant.getNombreVelo());
         }
     }
 }
