@@ -30,7 +30,7 @@ private int nombreVelo;
             }
         }
         // Si il y a plus de 0 vélo on en emprunte un.
-        setNombreVelo(getNombreVelo()-1);
+        this.nombreVelo-=1;
         if(getNombreVelo()==stockMax-1)
             notify();
     }
@@ -45,7 +45,7 @@ private int nombreVelo;
             }
         }
 
-        setNombreVelo(getNombreVelo()+1);
+        this.nombreVelo+=1;
         if(getNombreVelo() == 1)
             notify();
     }
@@ -56,8 +56,55 @@ private int nombreVelo;
        return nombreVelo;
     }
 
-    synchronized public void setNombreVelo(int nombreVelo) {
-        this.nombreVelo = nombreVelo;
+    //synchronized public void setNombreVelo(int nombreVelo) {
+
+    //    this.nombreVelo = nombreVelo;
+    //    notify();
+    //}
+
+    /**
+     * @param stockCamion
+     * @return nouveau stockCamion
+     */
+    synchronized public int majStock(int stockCamion) {
+
+        int nb;
+
+        if(this.getNombreVelo()<this.borneInf){
+            if(stockCamion>=(this.stockInit-this.getNombreVelo())){
+                nb = this.getNombreVelo() + (this.stockInit-this.getNombreVelo());
+                this.nombreVelo = nb;
+                stockCamion -= (nb);
+                System.out.println("J'ai ajouté "+nb+" vélos au site "+ this.getNumeroSite() +" stock CAMION = "+ stockCamion+" ; stock site n°"+ this.getNumeroSite()+" = " + this.getNombreVelo());
+               notifyAll();
+            }
+            else {
+                nb = this.getNombreVelo()+stockCamion;
+                this.nombreVelo = nb;
+                stockCamion = 0;
+                System.out.println("J'ai ajouté "+nb+" vélos au site "+ this.getNumeroSite() +" stock CAMION = "+ stockCamion+" ; stock site n°"+ this.getNumeroSite()+" = " + this.getNombreVelo());
+                notifyAll();
+            }
+
+        }
+        else if(this.getNombreVelo()>this.borneSup) {
+            int nbstock = (this.getNombreVelo() - this.stockInit);
+            nb=this.getNombreVelo() - (this.getNombreVelo() - this.stockInit);
+            stockCamion = stockCamion + nb;
+            this.nombreVelo = nbstock;
+            System.out.println("J'ai enlevé "+nb+" vélos au site "+ this.getNumeroSite() +" stock CAMION = "+ stockCamion+" ; stock site n°"+ this.getNumeroSite()+" = " + this.getNombreVelo());
+            notifyAll();
+        }
+        else{
+            System.out.println("Nombre de vélos OK sur le site " + this.getNumeroSite());
+        }
+
+        System.out.print("CAMION, mon stock =" + stockCamion);
+        System.out.println(" ; stock site = "+this.getNumeroSite()+","+this.getNombreVelo());
+
+        return stockCamion;
+
+
     }
 }
 
